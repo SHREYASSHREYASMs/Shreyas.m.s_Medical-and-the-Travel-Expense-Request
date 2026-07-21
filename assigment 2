@@ -1,0 +1,2488 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>Worker Progress Report</title>
+
+
+<style>
+
+
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    padding: 20px;
+
+    background: #dfe3e6;
+
+    font-family: Arial, Helvetica, sans-serif;
+
+    color: #222;
+
+    font-size: 14px;
+}
+
+
+
+#reportForm {
+
+    max-width: 850px;
+
+    margin: auto;
+
+}
+
+
+
+.page {
+
+    width: 210mm;
+
+    min-height: 297mm;
+
+    background: white;
+
+    margin: 20px auto;
+
+    padding: 18mm 15mm 15mm 15mm;
+
+    position: relative;
+
+    box-shadow:
+        0 0 8px rgba(0,0,0,0.25);
+
+    page-break-after: always;
+
+}
+
+
+/* =====================================================
+   HEADER
+===================================================== */
+
+.top-header {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    border-bottom: 1px solid #777;
+
+    padding-bottom: 10px;
+
+    margin-bottom: 18px;
+
+}
+
+
+/* PHOTO LOGO */
+
+.logo-area {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    color: #005a9c;
+
+}
+
+
+/* UPLOADED PHOTO LOGO */
+
+.logo-image {
+
+    width: 100px;
+
+    height: auto;
+
+    max-height: 70px;
+
+    object-fit: contain;
+
+    display: block;
+
+}
+
+
+.logo-text {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #005a9c;
+
+}
+
+
+.logo-text span {
+
+    display: block;
+
+    font-size: 11px;
+
+    font-weight: normal;
+
+    margin-top: 4px;
+
+    color: #333;
+
+}
+
+
+.contact {
+
+    text-align: right;
+
+    font-size: 10px;
+
+    line-height: 1.5;
+
+}
+
+
+/* =====================================================
+   ALL HEADINGS BLUE
+===================================================== */
+
+h1,
+h2,
+h3,
+.section-title,
+.title h1,
+.receipt-header h1,
+.receipt-header h2 {
+
+    color: #005a9c;
+
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.title {
+
+    text-align: center;
+
+    margin: 5px 0 20px;
+
+}
+
+
+.title h1 {
+
+    font-size: 25px;
+
+    margin: 0 0 7px;
+
+    color: #005a9c;
+
+}
+
+
+.title p {
+
+    margin: 0;
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   CLAIM HEADER
+===================================================== */
+
+.claim-box {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    border-top: 2px solid #005a9c;
+
+    border-bottom: 1px solid #222;
+
+    padding: 10px 0;
+
+    margin-bottom: 18px;
+
+    font-weight: bold;
+
+    font-size: 14px;
+
+}
+
+
+.section {
+
+    margin-top: 17px;
+
+    border: 1px solid #888;
+
+}
+
+
+.section-title {
+
+    background: #eeeeee;
+
+    border-bottom: 1px solid #888;
+
+    padding: 9px 10px;
+
+    font-weight: bold;
+
+    font-size: 16px;
+
+    color: #005a9c;
+
+}
+
+
+.section-content {
+
+    padding: 12px;
+
+}
+
+
+
+
+.row {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-bottom: 12px;
+
+}
+
+
+.col {
+
+    flex: 1;
+
+}
+
+
+label {
+
+    display: block;
+
+    margin-bottom: 6px;
+
+    font-size: 14px;
+
+}
+
+
+input[type="text"],
+input[type="date"],
+textarea,
+select {
+
+    width: 100%;
+
+    border: 1px solid #777;
+
+    padding: 8px;
+
+    font-size: 13px;
+
+    background: white;
+
+}
+
+
+textarea {
+
+    min-height: 60px;
+
+    resize: vertical;
+
+}
+
+
+.inline {
+
+    display: inline-block;
+
+    margin-right: 18px;
+
+    margin-bottom: 8px;
+
+}
+
+
+input[type="checkbox"],
+input[type="radio"] {
+
+    margin-right: 6px;
+
+}
+
+
+/* =====================================================
+   QUESTION
+===================================================== */
+
+.question {
+
+    font-weight: bold;
+
+    margin-bottom: 10px;
+
+    font-size: 14px;
+
+}
+
+
+/* =====================================================
+   PAIN SCALE
+===================================================== */
+
+.pain-scale {
+
+    display: flex;
+
+    gap: 7px;
+
+    margin-top: 10px;
+
+}
+
+
+.pain-item {
+
+    border: 1px solid #777;
+
+    padding: 8px 11px;
+
+    cursor: pointer;
+
+    font-size: 14px;
+
+}
+
+
+.pain-item:hover {
+
+    background: #eee;
+
+}
+
+
+/* =====================================================
+   FOOTER
+===================================================== */
+
+.footer {
+
+    position: absolute;
+
+    bottom: 10mm;
+
+    left: 15mm;
+
+    right: 15mm;
+
+    border-top: 1px solid #777;
+
+    padding-top: 6px;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    font-size: 10px;
+
+    color: #555;
+
+}
+
+
+/* =====================================================
+   CERTIFICATION
+===================================================== */
+
+.certification {
+
+    border: 1px solid #777;
+
+    padding: 13px;
+
+    line-height: 1.6;
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   SIGNATURE
+===================================================== */
+
+.signature-row {
+
+    display: flex;
+
+    gap: 20px;
+
+    margin-top: 25px;
+
+}
+
+
+.signature-row div {
+
+    flex: 1;
+
+}
+
+
+/* =====================================================
+   SUBMIT
+===================================================== */
+
+.submit-area {
+
+    text-align: center;
+
+    margin: 30px;
+
+}
+
+
+button {
+
+    padding: 14px 32px;
+
+    border: none;
+
+    border-radius: 4px;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+}
+
+
+.submit-button {
+
+    background: #005a9c;
+
+    color: white;
+
+}
+
+
+.submit-button:hover {
+
+    background: #003f6d;
+
+}
+
+
+/* =====================================================
+   RECEIPT
+===================================================== */
+
+#receipt {
+
+    display: none;
+
+    max-width: 850px;
+
+    margin: auto;
+
+}
+
+
+.receipt-page {
+
+    width: 210mm;
+
+    min-height: 297mm;
+
+    background: white;
+
+    margin: auto;
+
+    padding: 20mm;
+
+    box-shadow:
+        0 0 8px rgba(0,0,0,0.25);
+
+}
+
+
+.receipt-header {
+
+    text-align: center;
+
+    border-bottom: 2px solid #005a9c;
+
+    padding-bottom: 15px;
+
+}
+
+
+.receipt-header h1 {
+
+    margin: 0 0 8px;
+
+    font-size: 26px;
+
+    color: #005a9c;
+
+}
+
+
+.receipt-header h2 {
+
+    font-size: 20px;
+
+    color: #005a9c;
+
+}
+
+
+.success {
+
+    color: green;
+
+    font-weight: bold;
+
+    font-size: 15px;
+
+}
+
+
+.receipt-info {
+
+    margin-top: 20px;
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+
+}
+
+
+.info-box {
+
+    border: 1px solid #999;
+
+    padding: 11px;
+
+    font-size: 14px;
+
+}
+
+
+.receipt-table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    margin-top: 20px;
+
+    font-size: 14px;
+
+}
+
+
+.receipt-table th,
+.receipt-table td {
+
+    border: 1px solid #999;
+
+    padding: 10px;
+
+    text-align: left;
+
+    vertical-align: top;
+
+}
+
+
+.receipt-table th {
+
+    background: #eee;
+
+    width: 35%;
+
+    color: #005a9c;
+
+}
+
+
+.receipt-buttons {
+
+    text-align: center;
+
+    margin-top: 25px;
+
+}
+
+
+.print-button {
+
+    background: #333;
+
+    color: white;
+
+}
+
+
+.new-button {
+
+    background: #005a9c;
+
+    color: white;
+
+    margin-left: 10px;
+
+}
+
+
+/* =====================================================
+   PRINT
+===================================================== */
+
+@media print {
+
+    body {
+
+        background: white;
+
+        padding: 0;
+
+    }
+
+    #reportForm {
+
+        display: none;
+
+    }
+
+    #receipt {
+
+        display: block !important;
+
+    }
+
+    .receipt-page {
+
+        box-shadow: none;
+
+        margin: 0;
+
+    }
+
+    .receipt-buttons {
+
+        display: none;
+
+    }
+
+}
+
+
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media screen and (max-width: 900px) {
+
+    body {
+
+        padding: 5px;
+
+    }
+
+    .page,
+    .receipt-page {
+
+        width: 100%;
+
+        min-height: auto;
+
+        padding: 20px;
+
+    }
+
+    .row {
+
+        flex-direction: column;
+
+        gap: 5px;
+
+    }
+
+    .top-header {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 12px;
+
+    }
+
+    .contact {
+
+        text-align: left;
+
+    }
+
+    .logo-image {
+
+        width: 90px;
+
+    }
+
+    .footer {
+
+        position: relative;
+
+        bottom: auto;
+
+        left: auto;
+
+        right: auto;
+
+        margin-top: 30px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =====================================================
+     FORM START
+===================================================== -->
+
+<div id="reportForm">
+
+
+<!-- =====================================================
+     PAGE 1
+===================================================== -->
+
+<div class="page">
+
+
+<div class="top-header">
+
+
+    <!-- PHOTO LOGO -->
+
+    <div class="logo-area">
+
+        <img
+            src="./logo.jpeg"
+            class="logo-image"
+            alt="WCB Manitoba Logo">
+
+        <div class="logo-text">
+
+            WCB Manitoba
+
+            <span>
+                Workers Compensation Board of Manitoba
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <div class="contact">
+
+        333 Broadway<br>
+
+        Winnipeg, MB R3C 4W3<br>
+
+        Phone: (204) 954-4321<br>
+
+        Toll Free: 1-855-954-4321<br>
+
+        wcb.mb.ca
+
+    </div>
+
+</div>
+
+
+
+
+
+<div class="claim-box">
+
+    <div>
+
+        Claim No.
+
+        <input
+            type="text"
+            id="claimNo"
+            style="width:150px;"
+            placeholder="Enter Claim No."
+            required>
+
+    </div>
+
+
+    <div>
+
+        Worker App ID
+
+        <input
+            type="text"
+            id="workerAppId"
+            style="width:130px;"
+            placeholder="App ID">
+
+    </div>
+
+
+    <div>
+
+        Report Date
+
+        <input
+            type="date"
+            id="reportDate"
+            style="width:130px;"
+            required>
+
+    </div>
+
+</div>
+
+
+<!-- WORKER INFORMATION -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Worker Information
+
+</div>
+
+
+<div class="section-content">
+
+<div class="row">
+
+<div class="col">
+
+<label>
+    Worker Name
+</label>
+
+<input
+    type="text"
+    id="workerName"
+    required>
+
+</div>
+
+
+<div class="col">
+
+<label>
+    Date of Birth
+</label>
+
+<input
+    type="date"
+    id="dob">
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="col">
+
+<label>
+    Address
+</label>
+
+<input
+    type="text"
+    id="address">
+
+</div>
+
+
+<div class="col">
+
+<label>
+    Phone
+</label>
+
+<input
+    type="text"
+    id="phone">
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- RETURN TO WORK -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Return to Work
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="question">
+
+    My return to work is going:
+
+</div>
+
+
+<textarea
+    id="returnProgress"
+    placeholder="Describe how your return to work is going">
+</textarea>
+
+
+<br>
+
+
+<div class="question">
+
+    Select one:
+
+</div>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="workStatus"
+    value="I have not returned to work">
+
+I have not returned to work
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="workStatus"
+    value="I have not missed time from work">
+
+I have not missed time from work
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="workStatus"
+    value="I am working">
+
+I am working
+
+</label>
+
+
+<br><br>
+
+
+<div class="row">
+
+<div class="col">
+
+<label>
+
+    I returned to work on:
+
+</label>
+
+<input
+    type="date"
+    id="returnedDate">
+
+</div>
+
+
+<div class="col">
+
+<label>
+
+    I expect to return to work on:
+
+</label>
+
+<input
+    type="date"
+    id="expectedReturnDate">
+
+</div>
+
+</div>
+
+
+<div class="question">
+
+    My work duties are:
+
+</div>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="duties"
+    value="Full duties, regular hours">
+
+Full duties, regular hours
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="duties"
+    value="Full duties, reduced hours">
+
+Full duties, reduced hours
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="duties"
+    value="Modified duties, regular hours">
+
+Modified duties, regular hours
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="duties"
+    value="Modified duties, reduced hours">
+
+Modified duties, reduced hours
+
+</label>
+
+
+<br><br>
+
+
+<label>
+
+    I have the following concerns about returning to work:
+
+</label>
+
+
+<textarea
+    id="returnConcerns">
+</textarea>
+
+
+<br>
+
+
+<div class="row">
+
+<div class="col">
+
+<label>
+
+    I was most recently in contact with:
+
+</label>
+
+<input
+    type="text"
+    id="employerContact">
+
+</div>
+
+
+<div class="col">
+
+<label>
+
+    Date:
+
+</label>
+
+<input
+    type="date"
+    id="contactDate">
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- RECOVERY -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Recovery
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="question">
+
+    Select one:
+
+</div>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="recovery"
+    value="I have not fully recovered from my workplace injury.">
+
+I have not fully recovered from my workplace injury.
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="recovery"
+    value="I have fully recovered from my workplace injury.">
+
+I have fully recovered from my workplace injury.
+
+</label>
+
+
+<br><br>
+
+
+<label>
+
+    I have provided the following comments about my recovery:
+
+</label>
+
+
+<textarea
+    id="recoveryComments">
+</textarea>
+
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+<span>
+
+    Worker Progress Report
+
+</span>
+
+<span>
+
+    Page 1 of 3
+
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     PAGE 2
+===================================================== -->
+
+<div class="page">
+
+
+<div class="top-header">
+
+
+    <!-- PHOTO LOGO -->
+
+    <div class="logo-area">
+
+        <img
+            src="./logo.jpeg"
+            class="logo-image"
+            alt="WCB Manitoba Logo">
+
+        <div class="logo-text">
+
+            WCB Manitoba
+
+        </div>
+
+    </div>
+
+
+<div class="contact">
+
+    Workers Compensation Board of Manitoba<br>
+
+    333 Broadway, Winnipeg, MB R3C 4W3<br>
+
+    Phone: (204) 954-4321<br>
+
+    Toll Free: 1-855-954-4321<br>
+
+    wcb.mb.ca
+
+</div>
+
+</div>
+
+
+<div class="title">
+
+<h1>
+
+    Worker Progress Report
+
+</h1>
+
+</div>
+
+
+<!-- PAIN -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Pain / Discomfort
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="question">
+
+I rate my current pain/discomfort on a scale of 1-10,
+
+where 1 is no pain and 10 is severe pain out of 10.
+
+</div>
+
+
+<div class="pain-scale">
+
+
+<label class="pain-item">
+<input type="radio" name="pain" value="1">
+1
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="2">
+2
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="3">
+3
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="4">
+4
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="5">
+5
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="6">
+6
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="7">
+7
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="8">
+8
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="9">
+9
+</label>
+
+<label class="pain-item">
+<input type="radio" name="pain" value="10">
+10
+</label>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<!-- MEDICAL TREATMENT -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Medical Treatment
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="question">
+
+Select one:
+
+</div>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="medicalStatus"
+    value="I am not continuing to receive medical treatment for my workplace injury.">
+
+I am not continuing to receive medical treatment for my workplace injury.
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="medicalStatus"
+    value="I am continuing to receive medical treatment for my workplace injury.">
+
+I am continuing to receive medical treatment for my workplace injury.
+
+</label>
+
+
+<br><br>
+
+
+<div class="row">
+
+<div class="col">
+
+<label>
+
+    Medical Provider Type
+
+</label>
+
+<input
+    type="text"
+    id="providerType">
+
+</div>
+
+
+<div class="col">
+
+<label>
+
+    Medical Provider Name
+
+</label>
+
+<input
+    type="text"
+    id="providerName">
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="col">
+
+<label>
+
+    My last medical treatment was from
+
+</label>
+
+<input
+    type="text"
+    id="lastProvider">
+
+</div>
+
+
+<div class="col">
+
+<label>
+
+    Date
+
+</label>
+
+<input
+    type="date"
+    id="lastTreatmentDate">
+
+</div>
+
+</div>
+
+
+<div class="row">
+
+<div class="col">
+
+<label>
+
+    My next medical treatment is from
+
+</label>
+
+<input
+    type="text"
+    id="nextProvider">
+
+</div>
+
+
+<div class="col">
+
+<label>
+
+    Date
+
+</label>
+
+<input
+    type="date"
+    id="nextTreatmentDate">
+
+</div>
+
+</div>
+
+
+<label>
+
+    I am attending a Chiropractor or Physiotherapist
+
+</label>
+
+<input
+    type="text"
+    id="physioFrequency"
+    placeholder="Frequency">
+
+</div>
+
+</div>
+
+
+<!-- MEDICATION -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Medication
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="question">
+
+Select one:
+
+</div>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="medicationStatus"
+    value="I am not taking medication for my workplace injury.">
+
+I am not taking medication for my workplace injury.
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="medicationStatus"
+    value="I am taking medication for my workplace injury.">
+
+I am taking medication for my workplace injury.
+
+</label>
+
+
+<br><br>
+
+
+<label>
+
+    Name of prescribed medication:
+
+</label>
+
+
+<input
+    type="text"
+    id="medication">
+
+</div>
+
+</div>
+
+
+<!-- HOME EXERCISES -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Home Exercises
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="question">
+
+Select one:
+
+</div>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="exerciseStatus"
+    value="I am not doing home exercises for my workplace injury.">
+
+I am not doing home exercises for my workplace injury.
+
+</label>
+
+
+<label class="inline">
+
+<input
+    type="radio"
+    name="exerciseStatus"
+    value="I am doing home exercises for my workplace injury.">
+
+I am doing home exercises for my workplace injury.
+
+</label>
+
+
+<br><br>
+
+
+<label>
+
+    List the exercises you are doing:
+
+</label>
+
+
+<textarea
+    id="exercises">
+</textarea>
+
+
+</div>
+
+</div>
+
+
+<!-- OTHER INFORMATION -->
+
+<div class="section">
+
+<div class="section-title">
+
+    Other Information
+
+</div>
+
+
+<div class="section-content">
+
+
+<label>
+
+I would like to provide the following additional information about my claim/injury:
+
+</label>
+
+
+<textarea
+    id="additionalInfo"
+    style="min-height:100px;">
+</textarea>
+
+
+</div>
+
+</div>
+
+
+<div class="footer">
+
+<span>
+
+    Worker Progress Report
+
+</span>
+
+<span>
+
+    Page 2 of 3
+
+</span>
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     PAGE 3
+===================================================== -->
+
+<div class="page">
+
+
+<div class="top-header">
+
+
+    <!-- PHOTO LOGO -->
+
+    <div class="logo-area">
+
+        <img
+            src="./logo.jpeg"
+            class="logo-image"
+            alt="WCB Manitoba Logo">
+
+        <div class="logo-text">
+
+            WCB Manitoba
+
+        </div>
+
+    </div>
+
+
+<div class="contact">
+
+    Workers Compensation Board of Manitoba<br>
+
+    333 Broadway, Winnipeg, MB R3C 4W3<br>
+
+    Phone: (204) 954-4321<br>
+
+    Toll Free: 1-855-954-4321<br>
+
+    wcb.mb.ca
+
+</div>
+
+</div>
+
+
+<div class="title">
+
+<h1>
+
+    Worker Progress Report
+
+</h1>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">
+
+    Certification
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="certification">
+
+
+I certify that the information given on this form is true,
+
+correct and complete to the best of my knowledge.
+
+
+<br><br>
+
+
+I agree to notify the Workers Compensation Board of Manitoba
+
+(WCB) immediately once I return to any form of work and/or
+
+employment.
+
+
+<br><br>
+
+
+I understand that it is an offence to knowingly make a false
+
+statement to the WCB.
+
+
+<br><br>
+
+
+I also understand that it is an offence to withhold information
+
+from WCB which affects my entitlement to compensation
+
+(e.g., full or partial recovery from injury, ability to return to
+
+work, sources of additional income, etc.).
+
+
+<br><br>
+
+
+I understand that refusing to co-operate with, or follow my
+
+treatment, may result in the WCB reducing or suspending
+
+my benefits.
+
+
+<br><br>
+
+
+I understand that the Privacy Notice applies to the personal
+
+information collected in this document.
+
+
+</div>
+
+
+<br>
+
+
+<label>
+
+<input
+    type="checkbox"
+    id="certification"
+    required>
+
+I certify that the information provided above is true,
+
+correct and complete.
+
+</label>
+
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="section-title">
+
+    Signature / Submission
+
+</div>
+
+
+<div class="section-content">
+
+
+<div class="signature-row">
+
+
+<div>
+
+<label>
+
+    Worker Name
+
+</label>
+
+<input
+    type="text"
+    id="signatureName"
+    placeholder="Enter your name">
+
+</div>
+
+
+<div>
+
+<label>
+
+    Date
+
+</label>
+
+<input
+    type="date"
+    id="signatureDate">
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="submit-area">
+
+<button
+    type="button"
+    class="submit-button"
+    onclick="submitReport()">
+
+    Submit Worker Progress Report
+
+</button>
+
+</div>
+
+
+<div class="footer">
+
+<span>
+
+    Worker Progress Report
+
+</span>
+
+<span>
+
+    Page 3 of 3
+
+</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     RECEIPT
+===================================================== -->
+
+<div id="receipt">
+
+
+<div class="receipt-page">
+
+
+<div class="receipt-header">
+
+<h1>
+
+    Worker Progress Report
+
+</h1>
+
+
+<h2>
+
+    Submission Receipt
+
+</h2>
+
+
+<p class="success">
+
+    ✓ Report Submitted Successfully
+
+</p>
+
+
+</div>
+
+
+<div class="receipt-info">
+
+
+<div class="info-box">
+
+<strong>
+
+Receipt Number
+
+</strong>
+
+<br>
+
+<span id="receiptNumber"></span>
+
+</div>
+
+
+<div class="info-box">
+
+<strong>
+
+Submission Date & Time
+
+</strong>
+
+<br>
+
+<span id="submissionTime"></span>
+
+</div>
+
+
+</div>
+
+
+<table class="receipt-table">
+
+
+<tr>
+<th>Claim Number</th>
+<td id="rClaimNo"></td>
+</tr>
+
+
+<tr>
+<th>Worker App ID</th>
+<td id="rAppId"></td>
+</tr>
+
+
+<tr>
+<th>Worker Name</th>
+<td id="rWorkerName"></td>
+</tr>
+
+
+<tr>
+<th>Report Date</th>
+<td id="rReportDate"></td>
+</tr>
+
+
+<tr>
+<th>Return to Work</th>
+<td id="rReturnProgress"></td>
+</tr>
+
+
+<tr>
+<th>Work Status</th>
+<td id="rWorkStatus"></td>
+</tr>
+
+
+<tr>
+<th>Returned to Work Date</th>
+<td id="rReturnedDate"></td>
+</tr>
+
+
+<tr>
+<th>Expected Return Date</th>
+<td id="rExpectedDate"></td>
+</tr>
+
+
+<tr>
+<th>Work Duties</th>
+<td id="rDuties"></td>
+</tr>
+
+
+<tr>
+<th>Return to Work Concerns</th>
+<td id="rConcerns"></td>
+</tr>
+
+
+<tr>
+<th>Employer Contact</th>
+<td id="rEmployerContact"></td>
+</tr>
+
+
+<tr>
+<th>Recovery Status</th>
+<td id="rRecovery"></td>
+</tr>
+
+
+<tr>
+<th>Recovery Comments</th>
+<td id="rRecoveryComments"></td>
+</tr>
+
+
+<tr>
+<th>Pain / Discomfort</th>
+<td id="rPain"></td>
+</tr>
+
+
+<tr>
+<th>Medical Treatment</th>
+<td id="rMedical"></td>
+</tr>
+
+
+<tr>
+<th>Medical Provider</th>
+<td id="rProvider"></td>
+</tr>
+
+
+<tr>
+<th>Last Medical Treatment</th>
+<td id="rLastTreatment"></td>
+</tr>
+
+
+<tr>
+<th>Next Medical Treatment</th>
+<td id="rNextTreatment"></td>
+</tr>
+
+
+<tr>
+<th>Medication</th>
+<td id="rMedication"></td>
+</tr>
+
+
+<tr>
+<th>Home Exercises</th>
+<td id="rExercises"></td>
+</tr>
+
+
+<tr>
+<th>Additional Information</th>
+<td id="rAdditional"></td>
+</tr>
+
+
+</table>
+
+
+<div class="receipt-buttons">
+
+
+<button
+    class="print-button"
+    onclick="window.print()">
+
+    Print / Save Receipt
+
+</button>
+
+
+<button
+    class="new-button"
+    onclick="newReport()">
+
+    New Report
+
+</button>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script>
+
+
+function getRadio(name) {
+
+    const selected =
+        document.querySelector(
+            'input[name="' + name + '"]:checked'
+        );
+
+    return selected
+        ? selected.value
+        : "Not provided";
+
+}
+
+
+function value(id) {
+
+    const element =
+        document.getElementById(id);
+
+    return element &&
+           element.value.trim()
+        ? element.value
+        : "Not provided";
+
+}
+
+
+function submitReport() {
+
+
+    if (
+        !document.getElementById("claimNo").value.trim() ||
+        !document.getElementById("workerName").value.trim() ||
+        !document.getElementById("reportDate").value ||
+        !document.getElementById("certification").checked
+    ) {
+
+        alert(
+            "Please fill Claim Number, Worker Name, Report Date and accept the Certification."
+        );
+
+        return;
+
+    }
+
+
+    const receiptNo =
+        "WPR-" +
+        new Date().getFullYear() +
+        "-" +
+        Math.floor(
+            100000 + Math.random() * 900000
+        );
+
+
+    document.getElementById(
+        "receiptNumber"
+    ).innerText = receiptNo;
+
+
+    document.getElementById(
+        "submissionTime"
+    ).innerText =
+        new Date().toLocaleString();
+
+
+    document.getElementById(
+        "rClaimNo"
+    ).innerText =
+        value("claimNo");
+
+
+    document.getElementById(
+        "rAppId"
+    ).innerText =
+        value("workerAppId");
+
+
+    document.getElementById(
+        "rWorkerName"
+    ).innerText =
+        value("workerName");
+
+
+    document.getElementById(
+        "rReportDate"
+    ).innerText =
+        value("reportDate");
+
+
+    document.getElementById(
+        "rReturnProgress"
+    ).innerText =
+        value("returnProgress");
+
+
+    document.getElementById(
+        "rWorkStatus"
+    ).innerText =
+        getRadio("workStatus");
+
+
+    document.getElementById(
+        "rReturnedDate"
+    ).innerText =
+        value("returnedDate");
+
+
+    document.getElementById(
+        "rExpectedDate"
+    ).innerText =
+        value("expectedReturnDate");
+
+
+    document.getElementById(
+        "rDuties"
+    ).innerText =
+        getRadio("duties");
+
+
+    document.getElementById(
+        "rConcerns"
+    ).innerText =
+        value("returnConcerns");
+
+
+    document.getElementById(
+        "rEmployerContact"
+    ).innerText =
+        value("employerContact");
+
+
+    document.getElementById(
+        "rRecovery"
+    ).innerText =
+        getRadio("recovery");
+
+
+    document.getElementById(
+        "rRecoveryComments"
+    ).innerText =
+        value("recoveryComments");
+
+
+    document.getElementById(
+        "rPain"
+    ).innerText =
+        getRadio("pain");
+
+
+    document.getElementById(
+        "rMedical"
+    ).innerText =
+        getRadio("medicalStatus");
+
+
+    document.getElementById(
+        "rProvider"
+    ).innerText =
+        value("providerName");
+
+
+    document.getElementById(
+        "rLastTreatment"
+    ).innerText =
+        value("lastProvider")
+        + " | "
+        + value("lastTreatmentDate");
+
+
+    document.getElementById(
+        "rNextTreatment"
+    ).innerText =
+        value("nextProvider")
+        + " | "
+        + value("nextTreatmentDate");
+
+
+    document.getElementById(
+        "rMedication"
+    ).innerText =
+        getRadio("medicationStatus")
+        + " | "
+        + value("medication");
+
+
+    document.getElementById(
+        "rExercises"
+    ).innerText =
+        getRadio("exerciseStatus")
+        + " | "
+        + value("exercises");
+
+
+    document.getElementById(
+        "rAdditional"
+    ).innerText =
+        value("additionalInfo");
+
+
+    document.getElementById(
+        "reportForm"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "receipt"
+    ).style.display = "block";
+
+
+    window.scrollTo({
+
+        top: 0,
+
+        behavior: "smooth"
+
+    });
+
+
+}
+
+
+function newReport() {
+
+    location.reload();
+
+}
+
+
+</script>
+
+
+</body>
+
+</html>
